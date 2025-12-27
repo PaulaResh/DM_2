@@ -1,0 +1,36 @@
+# ЗАДАНИЕ №2
+
+# читаю из файла
+with open('20_2.txt', 'r') as f:
+    n = int(f.readline())
+    m = [list(map(int, f.readline().split())) for _ in range(n)]
+
+# нахожу степени и связность
+deg = [0]*n
+for i in range(n):
+    for j in range(n):
+        if m[i][j]:
+            deg[i] += 1
+
+vis = [0]*n
+s = [0]
+vis[0] = 1
+c = 1
+while s:
+    v = s.pop()
+    for j in range(n):
+        if m[v][j] and not vis[j]:
+            vis[j] = 1
+            s.append(j)
+            c += 1
+# проверка
+if c != n:
+    print('НЕТ')
+else:
+    odd = sum(1 for d in deg if d%2)
+    if odd == 0:
+        print('ДА, ВЕРНУТЬСЯ')
+    elif odd == 2:
+        print('ДА, НЕ ВЕРНУТЬСЯ')
+    else:
+        print('НЕТ')
